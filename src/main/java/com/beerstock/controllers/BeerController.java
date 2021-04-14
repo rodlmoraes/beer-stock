@@ -1,8 +1,11 @@
 package com.beerstock.controllers;
 
 import com.beerstock.dtos.BeerDTO;
+import com.beerstock.dtos.QuantityDTO;
 import com.beerstock.exceptions.BeerAlreadyRegisteredException;
+import com.beerstock.exceptions.BeerNegativeQuantityException;
 import com.beerstock.exceptions.BeerNotFoundException;
+import com.beerstock.exceptions.BeerStockExceededException;
 import com.beerstock.services.BeerService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +41,15 @@ public class BeerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws BeerNotFoundException {
         beerService.deleteById(id);
+    }
+
+    @PatchMapping("/{id}/increment")
+    public BeerDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException {
+        return beerService.increment(id, quantityDTO.getQuantity());
+    }
+
+    @PatchMapping("/{id}/decrement")
+    public BeerDTO decrement(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerNegativeQuantityException {
+        return beerService.decrement(id, quantityDTO.getQuantity());
     }
 }
