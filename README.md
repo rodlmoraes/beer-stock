@@ -24,3 +24,5 @@ You have some commands that you can run inside the project's folder:
 You can import this postman collection with examples of all 
 endpoints, they are ready for you to play with your beers:
 https://www.getpostman.com/collections/faabcf56e83858625dfb
+
+You can also find the swagger docs at http://localhost:PORT/v3/api-docs when the app is running
